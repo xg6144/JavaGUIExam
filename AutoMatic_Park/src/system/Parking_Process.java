@@ -20,9 +20,9 @@ public class Parking_Process {
     }
 
     private void check_car_num(String car_num){
-        for(int i=0; i < list_class.parking_area_3.length; i++){
-            for(int j=0; j < list_class.parking_area_3.length; j++){
-                if(list_class.parking_area_3[i][j].equals(car_num)){
+        for(int i=0; i < list_class.parking_area.length; i++){
+            for(int j=0; j < list_class.parking_area.length; j++){
+                if(list_class.parking_area[i][j].equals(car_num)){
                     System.out.println("이미 주차되어 있는 차량 번호 입니다.");
                 }
             }
@@ -34,19 +34,19 @@ public class Parking_Process {
 
         String car_num = return_car_num();
         //check_car_num(car_num);
-
+        try{
         //검사 후 차량을 주차장에 빈자리에 주차시킨다. 제일 먼저 주차되는 곳은 0,0 이다.
         //1. 주차장을 검사한다.
         //2. 0,0 자리가 비어있다면 차량을 주차시킨다.
-        if(list_class.parking_area_3[0][0] == null){
-            list_class.parking_area_3[0][0] = car_num;
+        if(list_class.parking_area[0][0] == null){
+            list_class.parking_area[0][0] = car_num;
             System.out.println("주차 성공");
         }else {
             //0,0 자리가 비지 않았다면 빈 자리에 차를 주차시킨다.
-            for (int i = 0; i < list_class.parking_area_3.length; i++) {
-                for (int j = 0; j < list_class.parking_area_3.length; j++) {
-                    if (list_class.parking_area_3[i][j] == null){
-                        list_class.parking_area_3[i][j] = car_num;
+            for (int i = 0; i < list_class.parking_area.length; i++) {
+                for (int j = 0; j < list_class.parking_area.length; j++) {
+                    if (list_class.parking_area[i][j] == null){
+                        list_class.parking_area[i][j] = car_num;
                         //주차를 시키자 마자 for문을 탈출하기 위해 break를 사용한다.
                         System.out.println("주차 성공");
                         menu();
@@ -54,26 +54,37 @@ public class Parking_Process {
                 }
             }
         }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
     }
     //차량 출차
     public void output_car () {
         String car_num = return_car_num();
-        for (int i = 0; i < list_class.parking_area_1.size(); i++) {
-            if (list_class.parking_area_1.get(i).equals(car_num)) {
-                list_class.parking_area_1.remove(car_num);
-                System.out.println("차량 출자 성공");
-                menu();
-            }else{
-                System.out.println("차량 번호가 다름");
-                output_car();
+        
+        try{
+            for(int i=0; i < list_class.parking_area.length; i++){
+                for(int j=0; j < list_class.parking_area.length; j++){
+                    if(list_class.parking_area[i][j].equals(car_num)){
+                        list_class.parking_area[i][j] = null;
+                        System.out.println("출차완료");
+                        menu();
+                    }
+                }
             }
+        }catch(Exception e){
+            e.printStackTrace();
         }
+        
     }
 
     private void show_parking_car(){
-        for(int i=0; i < list_class.parking_area_3.length; i++){
-            for(int j=0; j < list_class.parking_area_3.length; j++){
-                System.out.println(list_class.parking_area_3[i][j]);
+        for(int i=0; i < list_class.parking_area.length; i++){
+            for(int j=0; j < list_class.parking_area.length; j++){
+                if(list_class.parking_area[i][j] != null){
+                    System.out.println(list_class.parking_area[i][j]);
+                }
             }
         }
     }
